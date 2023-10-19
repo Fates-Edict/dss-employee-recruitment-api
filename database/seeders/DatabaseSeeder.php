@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
             ]);
             $permissions[] = [
                 'name' => $module,
+                'slug' => Str::of($module)->slug('-'),
+                'browse' => true,
                 'create' => true,
                 'read' => true,
                 'write' => true,

@@ -27,12 +27,28 @@ Route::prefix('auth')->group(function() {
 
 Route::middleware(['auth:sanctum'])->group(function() {
     Route::get('/me', [UsersController::class, 'me']);
-});
 
-Route::middleware(['auth:sanctum'])->prefix('users')->group(function() {
-    Route::get('/', [UsersController::class, 'index']);
-});
+    Route::prefix('users')->controller(UsersController::class)->group(function() {
+        Route::get('/', 'index');
+        Route::get('/{id}', 'findById');
+        Route::post('/', 'store');
+        Route::put('/{id}', 'store');
+        Route::delete('/{id}', 'destroy');
+    });
 
-Route::prefix('modules')->group(function() {
-    Route::get('/', [ModulesController::class, 'index']);
+    Route::prefix('roles')->controller(RolesController::class)->group(function() {
+        Route::get('/', 'index');
+        Route::get('/{id}', 'findById');
+        Route::post('/', 'store');
+        Route::put('/{id}', 'store');
+        Route::delete('/{id}', 'destroy');
+    });
+
+    Route::prefix('modules')->controller(ModulesController::class)->group(function() {
+        Route::get('/', 'index');
+        Route::get('/{id}', 'findById');
+        Route::post('/', 'store');
+        Route::put('/{id}', 'store');
+        Route::delete('/{id}', 'destroy');
+    });
 });

@@ -31,8 +31,23 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected $appends = [
+        'role_name'
+    ];
+
+    public $searchable = [
+        'name',
+        'username',
+        'email'
+    ];
+
     public function Role()
     {
         return $this->belongsTo(Roles::class);
+    }
+
+    public function getRoleNameAttribute()
+    {
+        return $this->Role ? $this->Role->name : '';
     }
 }

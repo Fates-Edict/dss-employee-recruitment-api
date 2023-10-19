@@ -23,6 +23,16 @@ class UsersController extends Controller
         }
     }
 
+    public function findById(Request $request, $id)
+    {
+        try {
+            $data = $this->repository->findById($request, $id);
+            return hResponse($data);
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
     public function me(Request $request)
     {
         try {
