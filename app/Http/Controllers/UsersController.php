@@ -50,6 +50,18 @@ class UsersController extends Controller
         }
     }
 
+    public function destroy(Request $request, $id = null)
+    {
+        try {
+            $data = $this->repository->destroy($request, $id);
+            $msg = 'success delete data';
+            if($data) return hResponse([], $msg, 200);
+            else return hResponse([], 'failed delete data', 400);
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
     public function validator($request, $id)
     {
         $result = false;

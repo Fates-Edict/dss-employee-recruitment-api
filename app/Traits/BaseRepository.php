@@ -46,4 +46,19 @@ trait BaseRepository
             throw new Exception($e->getMessage());
         }
     }
+
+    public function destroy($request, $id)
+    {
+        try {
+            $result = false;
+            $data = $this->model->where('id', $id)->first();
+            if($data) {
+                $data->delete();
+                $result = true;
+            } else $result = false;
+            return $result;
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
 }
