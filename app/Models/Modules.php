@@ -11,4 +11,8 @@ class Modules extends Model
 
     protected $table = 'master.modules';
     protected $guarded = ['id'];
+    public $searchable = [
+        'name',
+        'slug',
+    ];
 }
