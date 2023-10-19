@@ -28,7 +28,8 @@ trait BaseRepository
             } else {
                 $data = $this->model;
                 if($orderBy) $data = $data->orderBy($orderBy[0], $orderBy[1]);
-                $data = $data->paginate($paginate);
+                if($request->limit) $data = $data->limit($request->limit);
+                $data = $data->get();
             }
             return $data;
         } catch(Exception $e) {

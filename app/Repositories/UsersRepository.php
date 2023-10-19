@@ -23,6 +23,19 @@ class UsersRepository
         return $model;
     }
 
+    public function store($request, $id)
+    {
+        try {
+            $data = $this->initModel($id);
+            $data->fill($request->all());
+            if($request->password) $data->password = Hash::make($request->password);
+            $data->save();
+            return $data;
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
     public function me($request)
     {
         try {
