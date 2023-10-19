@@ -47,6 +47,18 @@ trait BaseRepository
         }
     }
 
+    public function store($request, $id)
+    {
+        try {
+            $data = $this->initModel($id);
+            $data->fill($request->all());
+            $data->save();
+            return $data;
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
     public function destroy($request, $id)
     {
         try {

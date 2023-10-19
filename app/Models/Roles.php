@@ -14,6 +14,9 @@ class Roles extends Model
     protected $casts = [
         'permissions' => 'array'
     ];
+    public $searchable = [
+        'name'
+    ];
 
     public function User()
     {
