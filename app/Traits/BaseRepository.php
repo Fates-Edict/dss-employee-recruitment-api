@@ -9,7 +9,7 @@ trait BaseRepository
         return $this->model->searchable ?? [];
     }
 
-    public function index($request)
+    public function index($request, $relations = [])
     {
         try {
             $paginate = $request->paginate ?? 0;
@@ -24,11 +24,13 @@ trait BaseRepository
                         $data = $data->orWhere($value, 'ILIKE', '%' . $request->s . '%');
                     }
                 }
+                if(count($relations) > 0) $data = $data->with($relations);
                 $data = $data->paginate($paginate);
             } else {
                 $data = $this->model;
                 if($orderBy) $data = $data->orderBy($orderBy[0], $orderBy[1]);
                 if($request->limit) $data = $data->limit($request->limit);
+                if(count($relations) > 0) $data = $data->with($relations);
                 $data = $data->get();
             }
             return $data;
@@ -37,10 +39,11 @@ trait BaseRepository
         }
     }
 
-    public function findById($request, $id)
+    public function findById($request, $id, $relations = [])
     {
         try {
-            $data = $this->initModel($id);
+            if(count($relations) > 0) $data = $this->model->where('id', $id)->with($relations)->first();
+            else $data = $this->initModel($id);
             return $data;
         } catch(Exception $e) {
             throw new Exception($e->getMessage());

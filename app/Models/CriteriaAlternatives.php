@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Alternatives extends Model
+class CriteriaAlternatives extends Model
 {
     use HasFactory;
 
-    protected $table = 'master.alternatives';
+    protected $table = 'master.criteria_alternatives';
     protected $guarded = ['id'];
     public $searchable = [
-        'name'
+        'alternative_id'
     ];
 
-    public function CriteriaAlternatives()
+    public function Alternative()
     {
-        return $this->hasMany(CriteriaAlternatives::class, 'alternative_id', 'id');
+        return $this->belongsTo(Alternatives::class, 'alternative_id', '');
     }
 }

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('criteria_alternatives');
-        Schema::create('criteria_alternatives', function (Blueprint $table) {
+        Schema::dropIfExists('master.criteria_alternatives');
+        Schema::create('master.criteria_alternatives', function (Blueprint $table) {
             $table->id();
             $table->foreignId('alternative_id')->nullable();
             $table->foreignId('criteria_id')->nullable();
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('criteria_alternatives');
+        Schema::dropIfExists('master.criteria_alternatives');
     }
 };

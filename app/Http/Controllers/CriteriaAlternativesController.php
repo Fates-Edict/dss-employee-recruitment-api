@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Alternatives;
-use App\Repositories\AlternativesRepository;
+use App\Models\CriteriaAlternatives;
+use App\Repositories\CriteriaAlternativesRepository;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class AlternativesController extends Controller
+class CriteriaAlternativesController extends Controller
 {
     protected $repository;
 
-    public function __construct(AlternativesRepository $repository)
+    public function __construct(CriteriaAlternativesRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -20,7 +20,7 @@ class AlternativesController extends Controller
     public function index(Request $request)
     {
         try {
-            $data = $this->repository->index($request, ['CriteriaAlternatives']);
+            $data = $this->repository->index($request);
             return hResponse($data);
         } catch(Exception $e) {
             throw new Exception($e);
@@ -30,7 +30,7 @@ class AlternativesController extends Controller
     public function findById(Request $request, $id = null)
     {
         try {
-            $data = $this->repository->findById($request, $id, ['CriteriaAlternatives']);
+            $data = $this->repository->findById($request, $id);
             return hResponse($data);
         } catch(Exception $e) {
             throw new Exception($e->getMessage());
@@ -67,13 +67,18 @@ class AlternativesController extends Controller
     {
         $result = false;
         $message = [];
+        $criteriaAlternatives = CriteriaAlternatives::find($id);
 
         $validator = Validator::make($request->all(), 
         [
-            'name' => 'required'
+            'alternative_id' => [
+                'required',
+                Rule::unique('pgsql.master.criteria_alternatives')->ignore($criteriaAlternatives)
+            ]
         ],
         [
-            'name.required' => hValidatorMessage('Nama', 'required')
+            'alternative_id.required' => hValidatorMessage('Alternatif', 'required'),
+            'alternative_id.unique' => hValidatorMessage('Alternatif', 'unique'),
         ]);
 
         if($validator->fails()) {
