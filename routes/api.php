@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ModulesController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\JobVacanciesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,14 @@ Route::middleware(['auth:sanctum'])->group(function() {
     });
 
     Route::prefix('modules')->controller(ModulesController::class)->group(function() {
+        Route::get('/', 'index');
+        Route::get('/{id}', 'findById');
+        Route::post('/', 'store');
+        Route::put('/{id}', 'store');
+        Route::delete('/{id}', 'destroy');
+    });
+
+    Route::prefix('job-vacancies')->controller(JobVacanciesController::class)->group(function() {
         Route::get('/', 'index');
         Route::get('/{id}', 'findById');
         Route::post('/', 'store');
