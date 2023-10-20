@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             'Users',
             'Roles',
             'Modules',
-            'Job Vacancies'
+            'Job Vacancies',
+            'Alternatives'
         ];
         foreach($modules as $module) {
             Modules::create([
