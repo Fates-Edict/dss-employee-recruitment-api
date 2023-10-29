@@ -10,6 +10,7 @@ use App\Http\Controllers\JobVacanciesController;
 use App\Http\Controllers\AlternativesController;
 use App\Http\Controllers\CriteriaController;
 use App\Http\Controllers\CriteriaAlternativesController;
+use App\Http\Controllers\SimulationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +83,14 @@ Route::middleware(['auth:sanctum'])->group(function() {
     });
 
     Route::prefix('criteria-alternatives')->controller(CriteriaAlternativesController::class)->group(function() {
+        Route::get('/', 'index');
+        Route::get('/{id}', 'findById');
+        Route::post('/', 'store');
+        Route::put('/{id}', 'store');
+        Route::delete('/{id}', 'destroy');
+    });
+
+    Route::prefix('simulations')->controller(SimulationsController::class)->group(function() {
         Route::get('/', 'index');
         Route::get('/{id}', 'findById');
         Route::post('/', 'store');

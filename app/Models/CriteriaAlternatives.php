@@ -19,4 +19,9 @@ class CriteriaAlternatives extends Model
     {
         return $this->belongsTo(Alternatives::class, 'alternative_id', '');
     }
+
+    public function Criteria()
+    {
+        return $this->belongsTo(Criteria::class);
+    }
 }

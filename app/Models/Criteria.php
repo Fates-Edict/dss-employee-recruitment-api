@@ -16,4 +16,9 @@ class Criteria extends Model
         'slug',
         'type'
     ];
+
+    public function CriteriaAlternatives()
+    {
+        return $this->hasMany(CriteriaAlternatives::class);
+    }
 }

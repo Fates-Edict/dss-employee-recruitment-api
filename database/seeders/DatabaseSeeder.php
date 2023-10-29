@@ -30,7 +30,8 @@ class DatabaseSeeder extends Seeder
             'Job Vacancies',
             'Alternatives',
             'Criteria',
-            'Criteria Alternatives'
+            'Criteria Alternatives',
+            'Simulations'
         ];
         foreach($modules as $module) {
             Modules::create([
@@ -84,7 +85,12 @@ class DatabaseSeeder extends Seeder
             2 => ['Jarak Rumah Ke Kantor', 'cost'],
             3 => ['Pengalaman Menjadi Backend', 'benefit'],
             4 => ['Pengalaman Menjadi Frontend', 'benefit'],
-            5 => ['IPK', 'benefit']
+            5 => ['IPK', 'benefit'],
+            6 => ['Harga', 'cost'],
+            7 => ['Nilai Investasi 10 Tahun Kedepan', 'benefit'],
+            8 => ['Daya Dukung Terhadap Produktivitas Perusahaan', 'benefit'],
+            9 => ['Prioritas Kebutuhan', 'cost'],
+            10 => ['Ketersediaan / Kebutuhan', 'benefit']
         ];
 
         foreach($criteria as $row) {

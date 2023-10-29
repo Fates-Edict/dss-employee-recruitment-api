@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JobVacancies extends Model
+class Simulations extends Model
 {
     use HasFactory;
 
-    protected $table = 'master.job_vacancies';
+    protected $table = 'master.simulations';
     protected $guarded = ['id'];
     public $searchable = [
-        'name',
-        'slug',
+        'job_vacancy_id',
     ];
 
-    public function Simulations()
+    public function JobVacancy()
     {
-        return $this->hasMany(Simulations::class);
+        return $this->belongsTo(JobVacancies::class);
     }
 }

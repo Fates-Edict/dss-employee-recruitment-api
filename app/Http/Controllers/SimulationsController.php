@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Alternatives;
-use App\Repositories\AlternativesRepository;
+use App\Models\Simulations;
+use App\Repositories\SimulationsRepository;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class AlternativesController extends Controller
+class SimulationsController extends Controller
 {
     protected $repository;
 
-    public function __construct(AlternativesRepository $repository)
+    public function __construct(SimulationsRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -20,7 +20,7 @@ class AlternativesController extends Controller
     public function index(Request $request)
     {
         try {
-            $data = $this->repository->index($request, ['CriteriaAlternatives', 'CriteriaAlternatives.Criteria']);
+            $data = $this->repository->index($request);
             return hResponse($data);
         } catch(Exception $e) {
             throw new Exception($e);
@@ -30,7 +30,7 @@ class AlternativesController extends Controller
     public function findById(Request $request, $id = null)
     {
         try {
-            $data = $this->repository->findById($request, $id, ['CriteriaAlternatives']);
+            $data = $this->repository->findById($request, $id);
             return hResponse($data);
         } catch(Exception $e) {
             throw new Exception($e->getMessage());
@@ -67,13 +67,18 @@ class AlternativesController extends Controller
     {
         $result = false;
         $message = [];
+        $simulation = Simulations::find($id);
 
         $validator = Validator::make($request->all(), 
         [
-            'name' => 'required'
+            'name' => [
+                'required',
+                Rule::unique('pgsql.master.simulations')->ignore($simulation)
+            ]
         ],
         [
-            'name.required' => hValidatorMessage('Nama', 'required')
+            'name.required' => hValidatorMessage('Nama', 'required'),
+            'name.unique' => hValidatorMessage('Nama', 'unique')
         ]);
 
         if($validator->fails()) {
